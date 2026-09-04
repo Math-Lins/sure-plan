@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  nome           String
+  senha          String
+  role           String   @default("user")
+  meta           Float    @default(10000)
+  cpf            String?  @unique
+  dataNascimento String?
+  criadoEm      DateTime @default(now())
+
+  apostas Aposta[]
+  ganhos  Ganho[]
+
+  @@map("users")
+}
+
+model Aposta {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  data      String
+  horario   String
+  mercado   String
+  observacao String?
+
+  casas    Casa[]
+  criadoEm DateTime @default(now())
+
+  @@map("apostas")
+}
+
+model Casa {
+  id       String @id @default(cuid())
+  apostaId String
+  aposta   Aposta @relation(fields: [apostaId], references: [id], onDelete: Cascade)
+
+  nome         String
+  odd          Float
+  investimento Float
+  status       String
+  valorCashout Float?
+
+  @@map("casas")
+}
+
+model Ganho {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  data  String
+  tipo  String
+  casa  String
+  valor Float
+  observacao String?
+
+  @@map("ganhos")
+}
+
+model Convite {
+  id       String   @id @default(cuid())
+  token    String   @unique
+  usado    Boolean  @default(false)
+  criadoEm DateTime @default(now())
+
+  @@map("convites")
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  userId    String?
+  userNome  String?
+  acao      String
+  detalhes  String?
+  criadoEm DateTime @default(now())
+
+  @@map("logs")
+}
