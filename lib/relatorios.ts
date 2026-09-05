@@ -49,6 +49,7 @@ export function calcularResumoMes(
     .filter((g) => g.data.startsWith(mesIso))
     .reduce((s, g) => s + (g.tipo === "lucro" ? g.valor : -g.valor), 0);
 
+
   const lucro = lucroApostas + lucroGanhos;
   const roi = investido > 0 ? (lucroApostas / investido) * 100 : 0;
   const metaBatida = lucro >= meta;

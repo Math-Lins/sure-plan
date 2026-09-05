@@ -1,5 +1,13 @@
 export type StatusCasa = "pendente" | "ganhou" | "perdeu" | "devolvida" | "cashout";
 
+export type CasaAposta = {
+  nome: string;
+  odd: number;
+  investimento: number;
+  status: StatusCasa;
+  valorCashout?: number | null;
+};
+
 export type Casa = {
   id: string;
   nome: string;
