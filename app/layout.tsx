@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
 import { Providers } from "./providers";
+import AppShell from "@/components/AppShell";
 
 export const metadata: Metadata = {
   title: "SureStack",
@@ -17,8 +17,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <Providers>
-          <Sidebar />
-          <main className="lg:ml-60 p-4 lg:p-8 pb-24 lg:pb-8">{children}</main>
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>
